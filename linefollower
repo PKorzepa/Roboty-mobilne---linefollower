@@ -1,0 +1,222 @@
+#define echoPin 15
+#define trigPin 14
+
+#define IRL 23     //LEWY
+#define IRP 25     //PRAWY
+#define en1a 28    //Lewy tylni
+#define LTP 9
+#define LTT 8
+
+#define en1b 29    //Prawy tylni
+#define PTP 7
+#define PTT 6
+
+#define en2a 30    //Prawy przedni
+#define PPP 5
+#define PPT 4
+
+#define en2b 31    //Lewy przedni
+#define LPP 3
+#define LPT 2
+
+long duration;
+int distance;
+
+void setup() 
+{
+
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+  
+  pinMode(en1a, OUTPUT);
+  pinMode(en1b, OUTPUT);
+  pinMode(en2a, OUTPUT);
+  pinMode(en2b, OUTPUT);
+  pinMode(IRP,INPUT);
+  pinMode(IRL,INPUT);
+  pinMode(LTP,OUTPUT);
+  pinMode(LTT,OUTPUT);
+  pinMode(PTP,OUTPUT);
+  pinMode(PTT,OUTPUT);
+  pinMode(PPP,OUTPUT);
+  pinMode(PPT,OUTPUT);
+  pinMode(LPP,OUTPUT);
+  pinMode(LPT,OUTPUT);
+
+  
+}
+void loop() 
+{
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+
+  duration = pulseIn(echoPin, HIGH);
+  distance = duration * 0.034 / 2;
+
+if(distance <= 5)
+  {
+    
+    digitalWrite(en1a,HIGH);
+    digitalWrite(en1b,HIGH);
+    digitalWrite(en2a,HIGH);
+    digitalWrite(en2b,HIGH);
+
+    while(distance <= 5)
+    {
+      digitalWrite(trigPin, LOW);
+      delayMicroseconds(2);
+    
+      digitalWrite(trigPin, HIGH);
+      delayMicroseconds(10);
+      digitalWrite(trigPin, LOW);
+
+      duration = pulseIn(echoPin, HIGH);
+      distance = duration * 0.034 / 2;
+      
+     analogWrite (PPP, 0);
+     analogWrite (PPT, 100);
+     analogWrite (LPP, 100);
+     analogWrite (LPT, 0);
+     analogWrite (PTP, 100);
+     analogWrite (PTT, 0);
+     analogWrite (LTP, 0);
+     analogWrite (LTT, 100);
+      }
+      delay(1700);
+
+     analogWrite (PPP, 100);
+     analogWrite (PPT, 0);
+     analogWrite (LPP, 0);
+     analogWrite (LPT, 100);
+     analogWrite (PTP, 100);
+     analogWrite (PTT, 0);
+     analogWrite (LTP, 0);
+     analogWrite (LTT, 100);
+
+     delay(1300);
+
+     analogWrite (PPP, 0);
+     analogWrite (PPT, 100);
+     analogWrite (LPP, 100);
+     analogWrite (LPT, 0);
+     analogWrite (PTP, 100);
+     analogWrite (PTT, 0);
+     analogWrite (LTP, 0);
+     analogWrite (LTT, 100);
+
+     delay(1000);
+
+     while(distance <= 10)
+    {
+      digitalWrite(trigPin, LOW);
+      delayMicroseconds(2);
+    
+      digitalWrite(trigPin, HIGH);
+      delayMicroseconds(10);
+      digitalWrite(trigPin, LOW);
+
+      duration = pulseIn(echoPin, HIGH);
+      distance = duration * 0.034 / 2;
+      
+     analogWrite (PPP, 0);
+     analogWrite (PPT, 100);
+     analogWrite (LPP, 100);
+     analogWrite (LPT, 0);
+     analogWrite (PTP, 100);
+     analogWrite (PTT, 0);
+     analogWrite (LTP, 0);
+     analogWrite (LTT, 100);
+      }
+      delay(1400);
+
+      analogWrite (PPP, 0);
+     analogWrite (PPT, 100);
+     analogWrite (LPP, 100);
+     analogWrite (LPT, 0);
+     analogWrite (PTP, 0);
+     analogWrite (PTT, 100);
+     analogWrite (LTP, 100);
+     analogWrite (LTT, 00);
+
+     delay(1500);
+
+      while(digitalRead(IRP)!=HIGH && digitalRead(IRP)!=HIGH)
+      {
+       analogWrite (PPP, 100);
+       analogWrite (PPT, 0);
+       analogWrite (LPP, 0);
+       analogWrite (LPT, 100);
+       analogWrite (PTP, 0);
+       analogWrite (PTT, 100);
+       analogWrite (LTP, 100);
+       analogWrite (LTT, 0);
+      }
+  }
+  else
+  {
+    if(digitalRead(IRP)==LOW && digitalRead(IRL)==HIGH) {
+      digitalWrite(en1a,HIGH);
+      digitalWrite(en1b,HIGH);
+      digitalWrite(en2a,HIGH);
+      digitalWrite(en2b,HIGH);
+      analogWrite (PPP, 100);
+     analogWrite (PPT, 0);
+     analogWrite (LPP, 0);
+     analogWrite (LPT, 100);
+     analogWrite (PTP, 100);
+     analogWrite (PTT, 0);
+     analogWrite (LTP, 0);
+     analogWrite (LTT, 100);
+     delay(100);
+    }
+    else if(digitalRead(IRP)==HIGH && digitalRead(IRL)==LOW) {
+      digitalWrite(en1a,HIGH);
+      digitalWrite(en1b,HIGH);
+      digitalWrite(en2a,HIGH);
+      digitalWrite(en2b,HIGH);
+      analogWrite (PPP, 0);
+     analogWrite (PPT, 100);
+     analogWrite (LPP, 100);
+     analogWrite (LPT, 0);
+     analogWrite (PTP, 0);
+     analogWrite (PTT, 100);
+     analogWrite (LTP, 100);
+     analogWrite (LTT, 0);
+     delay(100);
+    }
+    
+    else if(digitalRead(IRL)==HIGH && digitalRead(IRP)==HIGH){
+      digitalWrite(en1a,LOW);
+      digitalWrite(en1b,LOW);
+      digitalWrite(en2a,LOW);
+      digitalWrite(en2b,LOW);
+      analogWrite (PPP, 0);
+     analogWrite (PPT, 0);
+     analogWrite (LPP, 0);
+     analogWrite (LPT, 0);
+     analogWrite (PTP, 0);
+     analogWrite (PTT, 0);
+     analogWrite (LTP, 0);
+     analogWrite (LTT, 0);
+    }
+  
+    else if(digitalRead(IRL)==LOW && digitalRead(IRP)==LOW){
+      digitalWrite(en1a,HIGH);
+      digitalWrite(en1b,HIGH);
+      digitalWrite(en2a,HIGH);
+      digitalWrite(en2b,HIGH);
+      analogWrite (PPP, 100);
+     analogWrite (PPT, 0);
+     analogWrite (LPP, 100);
+     analogWrite (LPT, 0);
+     analogWrite (PTP, 100);
+     analogWrite (PTT, 0);
+     analogWrite (LTP, 100);
+     analogWrite (LTT, 0);
+    }
+  }
+}
